@@ -7,6 +7,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { routing } from './suppliers.routing';
 import { Suppliers } from './suppliers.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
+import { ProductTables } from './components/productTables/productTables.component';
 import { SmartTablesService } from './components/smartTables/smartTables.service';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { SmartTablesService } from './components/smartTables/smartTables.service
   declarations: [
     Suppliers,
     SmartTables,
+    ProductTables
   ],
   providers: [
     SmartTablesService,

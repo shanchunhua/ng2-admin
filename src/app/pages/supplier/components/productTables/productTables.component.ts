@@ -6,14 +6,15 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { Http } from '@angular/http/src/http';
 import 'style-loader!./smartTables.scss';
 import 'style-loader!./buttons.scss';
-import { SupplierService } from './supplier.service';
+import { ProductService } from './product.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 @Component({
-  providers: [SupplierService],
+  providers: [ProductService],
   selector: 'smart-tables',
-  templateUrl: './smartTables.html',
+  templateUrl: './productTables.html',
 })
 
-export class SmartTables {
+export class ProductTables {
   query: string = '';
 
   settings = {
@@ -41,42 +42,28 @@ export class SmartTables {
         type: 'string'
       },
       contact: {
-        title: '联系人',
+        title: '类型',
         type: 'string'
       },
       cellphone: {
-        title: '联系电话',
+        title: '价格',
         type: 'string'
-      },
-      status: {
-        title: '状态',
-        type: 'html',
-        valuePrepareFunction: function (value, rowData) {
-          return value == 'CERTIFED' ? '<div  class="btn btn-success">已认证</div>' : `<div  class="btn btn-danger">未认证</div>`;
-        }
-      },
-      age: {
-        title: '操作',
-        type: 'custom',
-        renderComponent: CustomRenderComponent,
-        valuePrepareFunction: (cell, row) => {
-          return row;
-        }
       }
     }
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(protected http: Http, supplierService: SupplierService) {
-    this.load();
-    supplierService.dataChanged$.subscribe((id) => {
-      this.load();
-    })
+  constructor(private route: ActivatedRoute, protected http: Http, service: ProductService) {
+    this.route.params.subscribe(params => {
+      var id = +params['id']; 
+      this.load(id)
+    });
   }
 
-  load(): void {
-    this.http.get('http://localhost:8080/rest/suppliers').toPromise().then((response) => {
+  load(id): void {
+    console.log(id)
+    this.http.get('http://localhost:8080//rest/admin/suppliers/'+id+'/products').toPromise().then((response) => {
       console.log(response.json());
       this.source.load(response.json().data);
     });
@@ -85,13 +72,6 @@ export class SmartTables {
     console.log(event)
   }
 
-  onCertified(id): void {
-    alert(1);
-    this.http.get('http://localhost:8080/rest/suppliers/certificate/' + id).toPromise().then((response) => {
-      console.log(response.json());
-      this.load()
-    });
-  }
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();

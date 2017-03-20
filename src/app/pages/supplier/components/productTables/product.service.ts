@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Http } from '@angular/http/src/http';
 @Injectable()
-export class SupplierService {
+export class ProductService {
   // Observable string sources
   private changeSource = new Subject < string > ();
   // Observable string streams
