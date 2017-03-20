@@ -41,11 +41,11 @@ export class ProductTables {
         title: '名称',
         type: 'string'
       },
-      contact: {
+      'catalogName': {
         title: '类型',
         type: 'string'
       },
-      cellphone: {
+      price: {
         title: '价格',
         type: 'string'
       }
@@ -65,7 +65,7 @@ export class ProductTables {
     console.log(id)
     this.http.get('http://localhost:8080//rest/admin/suppliers/'+id+'/products').toPromise().then((response) => {
       console.log(response.json());
-      this.source.load(response.json().data);
+      this.source.load(response.json().data.map(o=>{o.catalogName=o.catalog.name;return o;}));
     });
   }
   onSelect(event) {
