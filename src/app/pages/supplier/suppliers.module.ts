@@ -9,7 +9,7 @@ import { Suppliers } from './suppliers.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
 import { ProductTables } from './components/productTables/productTables.component';
 import { SmartTablesService } from './components/smartTables/smartTables.service';
-
+import { CustomEditorComponent } from './components/productTables/custom-editor.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +24,7 @@ import { SmartTablesService } from './components/smartTables/smartTables.service
     ProductTables
   ],
   providers: [
-    SmartTablesService,
+    SmartTablesService
   ]
 })
 export class SuppliersModule {}

@@ -17,7 +17,10 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
-import { CustomRenderComponent } from './pages/supplier/components/smartTables/custom-render.component';// Application wide providers
+import { CustomRenderComponent } from './pages/supplier/components/smartTables/custom-render.component';
+import { CustomEditorComponent } from './pages/supplier/components/productTables/custom-editor.component';
+
+// Application wide providers
 const APP_PROVIDERS = [
   AppState,
   GlobalState
@@ -33,11 +36,11 @@ export type StoreType = {
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
 @NgModule({
-    entryComponents: [ CustomRenderComponent],
+    entryComponents: [ CustomRenderComponent,CustomEditorComponent],
   bootstrap: [App],
 
   declarations: [
-    App,CustomRenderComponent
+    App,CustomRenderComponent,CustomEditorComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,
