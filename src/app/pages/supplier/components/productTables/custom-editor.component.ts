@@ -4,27 +4,21 @@ import { Cell, DefaultEditor, Editor } from 'ng2-smart-table';
 
 @Component({
   template: `
-    Name: <input [ngClass]="inputClass"
-            #name
-            class="form-control short-input"
-            [name]="cell.getId()"
-            [disabled]="!cell.isEditable()"
-            [placeholder]="cell.getTitle()"
-            (click)="onClick.emit($event)"
-            (keyup)="updateValue()"
-            (keydown.enter)="onEdited.emit($event)"
-            (keydown.esc)="onStopEditing.emit()"><br>
-    Url: <input [ngClass]="inputClass"
-            #url
-            class="form-control short-input"
-            [name]="cell.getId()"
-            [disabled]="!cell.isEditable()"
-            [placeholder]="cell.getTitle()"
-            (click)="onClick.emit($event)"
-            (keyup)="updateValue()"
-            (keydown.enter)="onEdited.emit($event)"
-            (keydown.esc)="onStopEditing.emit()">
-    <div [hidden]="true" [innerHTML]="cell.getValue()" #htmlValue></div>
+  <div *ngIf="!cell.getRow().isInEditing && cell.getColumn().type !== 'html'">
+  {{ cell.getValue() }}
+  <div *ngIf="!cell.getRow().isInEditing && cell.getColumn().type === 'html'" [innerHTML]="cell.getValue()">
+   <input *ngIf="cell.getRow().isInEditing" 
+   [ngClass]="inputClass"
+    class="form-control"
+     [(ngModel)]="cell.newValue"
+      [name]="cell.getColumn().id" 
+       [id]="cell.getColumn().id" 
+        [type]="cell.getColumn().type" 
+         [placeholder]="cell.getColumn().title"
+          [disabled]="!cell.getColumn().isEditable"
+           (click)="onClick($event)"
+            (keydown.enter)="onEdited($event)" 
+             (keydown.esc)="onStopEditing()">
     `
 })
 export class CustomEditorComponent extends DefaultEditor {
