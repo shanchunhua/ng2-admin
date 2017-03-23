@@ -13,7 +13,7 @@ import { CustomEditorComponent } from './custom-editor.component';
 @Component({
   providers: [ProductService],
   selector: 'smart-tables',
-  templateUrl: './productTables.html',
+  templateUrl: './productTables.html'
 })
 
 export class ProductTables {
@@ -52,9 +52,7 @@ export class ProductTables {
         editor: {
           type: 'list',
           config: {
-            list: [
-              { value: 'Element Value', title: 'Element Title' }
-            ]
+            list: this.catalogList
           }
         }
       },
@@ -66,7 +64,7 @@ export class ProductTables {
         title: '图像',
         type: 'html',
         valuePrepareFunction: (value, rowData) => {
-          return '<img width="40px" src="'+value+'">';
+          return '<img width="40px" src="' + value + '">';
         },
         editor: {
           type: 'custom',
@@ -76,17 +74,30 @@ export class ProductTables {
     }
   };
 
+  id: number;
   source: LocalDataSource = new LocalDataSource();
-
-  constructor(private route: ActivatedRoute, protected http: Http, service: ProductService) {
+  catalogList= [];
+  constructor(private route: ActivatedRoute, protected http: Http, private service: ProductService) {
     this.route.params.subscribe(params => {
       var id = +params['id'];
+      this.id = id;
       this.load(id)
+      this.service.loadCatalogs().then((data) => {
+        var copy: any = {};
+        Object.assign(copy, this.settings);
+        this.catalogList = data;
+        copy.columns.catalogName.editor.config.list = data.map((item) => {
+          return { value: item.name, title: item.name }
+        })
+        this.settings = copy;
+        console.log(this.catalogList);
+      })
     });
   }
 
   load(id): void {
     console.log(id)
+    this.id = id;
     this.http.get('http://localhost:8080//rest/admin/suppliers/' + id + '/products').toPromise().then((response) => {
       console.log(response.json());
       this.source.load(response.json().data.map(o => {
@@ -97,11 +108,20 @@ export class ProductTables {
   }
   onSaveConfirm(event) {
     console.log(event)
-     event.confirm.resolve();
+    var data = event.newData;
+    var catalogName = data.catalogName;
+    var catalog = this.catalogList.find((item: any) => {
+      return item.name == catalogName;
+    })
+    data.catalog=catalog;
+    this.service.save(event.newData).then((response) => {
+      this.load(this.id);
+    });
+    event.confirm.resolve();
   }
   onCreateConfirm(event) {
-    window.alert('save');
     console.log(event)
+    event.confirm.resolve();
   }
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {

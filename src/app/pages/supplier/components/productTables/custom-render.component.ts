@@ -22,6 +22,5 @@ export class CustomRenderComponent implements ViewCell {
   }
 
   onCertificate(id) {
-    this.productService.certificate(id);
   }
 }
