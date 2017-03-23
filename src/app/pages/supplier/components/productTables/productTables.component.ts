@@ -64,9 +64,9 @@ export class ProductTables {
       },
       image: {
         title: '图像',
-        type: 'string',
+        type: 'html',
         valuePrepareFunction: (value, rowData) => {
-          return value
+          return '<img width="40px" src="'+value+'">';
         },
         editor: {
           type: 'custom',
@@ -97,6 +97,7 @@ export class ProductTables {
   }
   onSaveConfirm(event) {
     console.log(event)
+     event.confirm.resolve();
   }
   onCreateConfirm(event) {
     window.alert('save');
