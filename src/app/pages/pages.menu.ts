@@ -187,6 +187,25 @@ export const PAGES_MENU = [{
       }
     }]
   }, {
+    path: 'stores',
+    data: {
+      menu: {
+        title: '店铺',
+        icon: 'ion-grid',
+        selected: false,
+        expanded: false,
+        order: 500,
+      }
+    },
+    children: [{
+      path: 'storetable',
+      data: {
+        menu: {
+          title: '店铺管理',
+        }
+      }
+    }]
+  }, {
     path: 'maps',
     data: {
       menu: {
