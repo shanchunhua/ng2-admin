@@ -8,8 +8,7 @@ import { routing } from './stores.routing';
 import { Stores } from './stores.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
 import { ProductTables } from './components/productTables/productTables.component';
-import { SmartTablesService } from './components/smartTables/smartTables.service';
-import { CustomEditorComponent } from './components/productTables/custom-editor.component';
+import { StoreCustomRenderComponent } from './components/smartTables/custom-render.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +23,6 @@ import { CustomEditorComponent } from './components/productTables/custom-editor.
     ProductTables
   ],
   providers: [
-    SmartTablesService
   ]
 })
 export class StoresModule {}

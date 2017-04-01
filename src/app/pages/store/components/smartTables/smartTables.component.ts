@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component,OnInit  } from '@angular/core';
 
-import { CustomRenderComponent } from './custom-render.component';
-import { SmartTablesService } from './smartTables.service';
+import { StoreCustomRenderComponent } from './custom-render.component';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Http } from '@angular/http/src/http';
 import 'style-loader!./smartTables.scss';
 import 'style-loader!./buttons.scss';
-import { SupplierService } from './supplier.service';
+import { StoreService } from './store.service';
 @Component({
-  providers: [SupplierService],
+  providers: [StoreService],
   selector: 'smart-tables',
   templateUrl: './smartTables.html',
 })
 
-export class SmartTables {
+export class SmartTables  implements OnInit {
+
   query: string = '';
 
   settings = {
@@ -48,17 +48,10 @@ export class SmartTables {
         title: '联系电话',
         type: 'string'
       },
-      status: {
-        title: '状态',
-        type: 'html',
-        valuePrepareFunction: function (value, rowData) {
-          return value == 'CERTIFED' ? '<div  class="btn btn-success">已认证</div>' : `<div  class="btn btn-danger">未认证</div>`;
-        }
-      },
       age: {
         title: '操作',
         type: 'custom',
-        renderComponent: CustomRenderComponent,
+        renderComponent: StoreCustomRenderComponent,
         valuePrepareFunction: (cell, row) => {
           return row;
         }
@@ -68,13 +61,14 @@ export class SmartTables {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(protected http: Http, supplierService: SupplierService) {
-    this.load();
-    supplierService.dataChanged$.subscribe((id) => {
+  constructor(protected http: Http, private service: StoreService) {
+    service.dataChanged$.subscribe((id) => {
       this.load();
     })
   }
-
+  ngOnInit(): void {
+      this.service.load().then((data:any)=>{console.log('xxxx');console.log(data);this.source.load(data)})
+    }
   load(): void {
     this.http.get('http://localhost:8080/rest/suppliers').toPromise().then((response) => {
       console.log(response.json());
