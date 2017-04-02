@@ -6,6 +6,7 @@ import { Http } from '@angular/http/src/http';
 import 'style-loader!./smartTables.scss';
 import 'style-loader!./buttons.scss';
 import { StoreService } from './store.service';
+import { CustomEditorComponent } from './custom-editor.component';
 @Component({
   providers: [StoreService],
   selector: 'smart-tables',
@@ -48,6 +49,40 @@ export class SmartTables  implements OnInit {
         title: '联系电话',
         type: 'string'
       },
+      banner1: {
+        title: '图像',
+        type: 'html',
+        valuePrepareFunction: (value, rowData) => {
+          return '<img width="40px" src="'+value+'">';
+        },
+        editor: {
+          type: 'custom',
+          component: CustomEditorComponent
+        }
+      },
+      banner2: {
+        title: '图像',
+        type: 'html',
+        valuePrepareFunction: (value, rowData) => {
+          return '<img width="40px" src="'+value+'">';
+        },
+        editor: {
+          type: 'custom',
+          component: CustomEditorComponent
+        }
+      },
+      banner3: {
+        title: '图像',
+        type: 'html',
+        valuePrepareFunction: (value, rowData) => {
+          return '<img width="40px" src="'+value+'">';
+        },
+        editor: {
+          type: 'custom',
+          component: CustomEditorComponent
+        }
+      },
+
       age: {
         title: '操作',
         type: 'custom',

@@ -9,6 +9,8 @@ import { Stores } from './stores.component';
 import { SmartTables } from './components/smartTables/smartTables.component';
 import { ProductTables } from './components/productTables/productTables.component';
 import { StoreCustomRenderComponent } from './components/smartTables/custom-render.component';
+import { CustomEditorComponent } from './components/smartTables/custom-editor.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -17,10 +19,12 @@ import { StoreCustomRenderComponent } from './components/smartTables/custom-rend
     routing,
     Ng2SmartTableModule,
   ],
+    entryComponents: [ CustomEditorComponent],
   declarations: [
     Stores,
     SmartTables,
-    ProductTables
+    ProductTables,
+    CustomEditorComponent
   ],
   providers: [
   ]
