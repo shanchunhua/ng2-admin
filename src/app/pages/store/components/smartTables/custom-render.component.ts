@@ -4,9 +4,6 @@ import {Subscription}   from 'rxjs/Subscription';
 import {StoreService}     from './store.service';
 import {Setting} from '../setting/setting.component'
 @Component({
-   providers: [
-    Setting
-    ],
   template: `
   <div (click)="onSetting(value.id)" class=" btn btn-success">设置体验金比例</div>
   <a href="/#/pages/suppliers/producttable/{{value.id}}" class=" btn btn-success">产品列表</a>
@@ -24,7 +21,6 @@ export class StoreCustomRenderComponent implements ViewCell {
   }
 
   onSetting(id) {
-    alert(id);
     this.service.showSettingDialog(id);
   }
 }

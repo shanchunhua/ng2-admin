@@ -12,7 +12,9 @@ export class Setting implements OnInit {
   private settings: any;
   constructor(private service: StoreService) {
     service.settingDialogChanged$.subscribe((id) => {
-      this.service.loadCatalogs(id).then(data => this.settings = data).then(() => this.showChildModal())
+      console.log('xxxxxxx');
+      this.settings=[];
+      this.service.loadSettings(id).then(data => this.settings = data).then(() => this.showChildModal())
 
     })
   }
@@ -20,8 +22,11 @@ export class Setting implements OnInit {
   showChildModal(): void {
     this.childModal.show();
   }
-
   hideChildModal(): void {
     this.childModal.hide();
+  }
+  saveSettings(): void {
+    console.log(this.settings)
+    this.service.saveSettings(this.settings).then(()=>this.childModal.hide()); 
   }
 }

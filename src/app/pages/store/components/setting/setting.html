@@ -1,18 +1,26 @@
 <!-- control modal from parent component -->
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <button class="close" aria-label="Close" (click)="hideChildModal()">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Child modal</h4>
+        <h4 class="modal-title">设置体验金比例</h4>
       </div>
-      <div class="modal-body">
-        I am a child modal, opened from parent component!
+      <div class="modal-body" style="color:#000000">
+        <form class="form-horizontal">
+          <div class="row" *ngFor="let item of settings">
+            <label  class="col-sm-4">{{item.catalog.name}}</label>
+            <div class="col-sm-6">
+              <input type="text"   [(ngModel)]="item.experienceMoneyRate" name="experienceMoneyRate_{{item.id}}" placeholder="体验金比例" style="width:120px;padding: 0.5rem 0.5rem;margin: 0 0.25rem;">
+            </div>
+        <div class="col-sm-1" style="line-height: 34px;text-align: left;">%</div>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Save changes</button>
+        <button class="btn btn-primary confirm-btn" (click)="saveSettings()">保存</button>
       </div>
     </div>
   </div>

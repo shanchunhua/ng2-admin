@@ -1,25 +1,23 @@
 @import "../../../../theme/sass/conf/conf";
-
 .modal {
-  padding-top: 300px;
-
-  .modal-content {
-    color: $dropdown-text;
-
-    .modal-header {
-      border: none;
+    padding-top: 300px;
+    .modal-content {
+        color: #000000;
+        .modal-header {
+            border: none;
+        }
+        .modal-footer {
+            border: none;
+        }
+        .form-control {
+            color: #000000;
+        }
+        .close {
+            outline: none;
+        }
     }
-
-    .modal-footer {
-      border: none;
-    }
-
-    .close {
-      outline: none;
-    }
-  }
 }
 
 .modal-buttons .btn {
-  margin-right: 20px;
+    margin-right: 20px;
 }
