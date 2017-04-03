@@ -1,4 +1,4 @@
-import { Component,OnInit  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { StoreCustomRenderComponent } from './custom-render.component';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -13,7 +13,7 @@ import { CustomEditorComponent } from './custom-editor.component';
   templateUrl: './smartTables.html',
 })
 
-export class SmartTables  implements OnInit {
+export class SmartTables implements OnInit {
 
   query: string = '';
 
@@ -35,6 +35,7 @@ export class SmartTables  implements OnInit {
     columns: {
       id: {
         title: 'ID',
+        editable: false,
         type: 'number'
       },
       name: {
@@ -49,11 +50,15 @@ export class SmartTables  implements OnInit {
         title: '联系电话',
         type: 'string'
       },
+      appid: {
+        title: '公众号APPID',
+        type: 'string'
+      },
       banner1: {
         title: '图像',
         type: 'html',
         valuePrepareFunction: (value, rowData) => {
-          return '<img width="40px" src="'+value+'">';
+          return '<img width="40px" src="' + value + '">';
         },
         editor: {
           type: 'custom',
@@ -64,7 +69,7 @@ export class SmartTables  implements OnInit {
         title: '图像',
         type: 'html',
         valuePrepareFunction: (value, rowData) => {
-          return '<img width="40px" src="'+value+'">';
+          return '<img width="40px" src="' + value + '">';
         },
         editor: {
           type: 'custom',
@@ -75,7 +80,7 @@ export class SmartTables  implements OnInit {
         title: '图像',
         type: 'html',
         valuePrepareFunction: (value, rowData) => {
-          return '<img width="40px" src="'+value+'">';
+          return '<img width="40px" src="' + value + '">';
         },
         editor: {
           type: 'custom',
@@ -83,9 +88,10 @@ export class SmartTables  implements OnInit {
         }
       },
 
-      age: {
+      operation: {
         title: '操作',
         type: 'custom',
+        editable: false,
         renderComponent: StoreCustomRenderComponent,
         valuePrepareFunction: (cell, row) => {
           return row;
@@ -97,13 +103,14 @@ export class SmartTables  implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
   constructor(protected http: Http, private service: StoreService) {
-    service.dataChanged$.subscribe((id) => {
-      this.load();
-    })
   }
   ngOnInit(): void {
-      this.service.load().then((data:any)=>{console.log('xxxx');console.log(data);this.source.load(data)})
-    }
+    this.service.load().then((data: any) => {
+      console.log('xxxx');
+      console.log(data);
+      this.source.load(data)
+    })
+  }
   load(): void {
     this.http.get('http://localhost:8080/rest/suppliers').toPromise().then((response) => {
       console.log(response.json());
