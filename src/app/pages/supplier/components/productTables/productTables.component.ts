@@ -39,7 +39,7 @@ export class ProductTables {
     columns: {
       id: {
         title: 'ID',
-        //    editable: false,
+        editable: false,
         type: 'number'
       },
       name: {
@@ -76,7 +76,7 @@ export class ProductTables {
 
   id: number;
   source: LocalDataSource = new LocalDataSource();
-  catalogList= [];
+  catalogList = [];
   constructor(private route: ActivatedRoute, protected http: Http, private service: ProductService) {
     this.route.params.subscribe(params => {
       var id = +params['id'];
@@ -113,15 +113,17 @@ export class ProductTables {
     var catalog = this.catalogList.find((item: any) => {
       return item.name == catalogName;
     })
-    data.catalog=catalog;
+    data.catalog = catalog;
+    data.supplier = {
+      id: this.id
+    };
     this.service.save(event.newData).then((response) => {
       this.load(this.id);
     });
     event.confirm.resolve();
   }
   onCreateConfirm(event) {
-    console.log(event)
-    event.confirm.resolve();
+    this.onSaveConfirm(event);
   }
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
